@@ -1,0 +1,66 @@
+.header {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    padding: 20px 10px;
+    height: 70px;
+}
+
+.header a {
+    float: left;
+}
+
+.header p {
+    color: black;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+img.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: scale-down;
+}
+
+.control-board {
+    position: absolute;
+    height: 120px;
+    width: 100%;
+    bottom: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.control-board-right {
+    float: right;
+}
+
+/* Style the header links */
+.control-board-right a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
+    margin-right: 40px;
+}
+
+.savemap-btn {
+    font-size: 25px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+}
+/* Change the background color of the dropdown button when hover */
+.savemap-btn:hover {background-color: red;}
+
+.navigation-btn {
+    font-size: 25px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+}
+/* Change the background color of the button when hover*/
+.navigation-btn:hover {background-color: red;}

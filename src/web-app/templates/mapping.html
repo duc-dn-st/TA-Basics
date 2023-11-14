@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Application</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+
+<script>
+        createJoystick = function () {
+            var options = {
+                zone: document.getElementById('zone_joystick'),
+                threshold: 0.1,
+                position: { left: 10 + '%' },
+                mode: 'static',
+                size: 150,
+                color: '#000000',
+            };
+            manager = nipplejs.create(options);
+
+            linear_speed = 0;
+            angular_speed = 0;
+
+            self.manager.on('start', function (event, nipple) {
+                console.log("Movement start");
+            });
+
+            self.manager.on('move', function (event, nipple) {
+                console.log("Moving");
+            });
+
+            self.manager.on('end', function () {
+                console.log("Movement end");
+            });
+            }
+            window.onload = function () {
+            createJoystick();
+        }
+    </script>
+    <link rel="stylesheet" href="../css/mapping.css">
+</head>
+<body>
+    <div class="header">
+        <a href="#default"><img class="logo" src="../static/picture/tut.png"></img></a>
+        <div class="header-right">
+            <p class="app-name">Robot App Control</p>
+        </div>
+    </div>
+
+    <div class="control-board">
+        <div id="zone_joystick" style="position: relative;"></div>
+        <div class="control-board-right">
+            <a class="savemap-btn" href="#">SAVE MAP</a>
+            <a class="navigation-btn" href="#">NAVIGATION</a>
+        </div>
+    </div>
+
+</body>
+</html>
