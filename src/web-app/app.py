@@ -8,7 +8,8 @@ def main():
 
 @app.route('/mapping')
 def mapping():
-    return render_template('mapping.html', title='Mapping') 
+    mapping = render_template('mapping.html', title='Mapping')
+    return mapping
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
