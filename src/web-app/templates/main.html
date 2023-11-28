@@ -7,6 +7,7 @@
     <title>Robot Control Application</title>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+    <script type="text/javascript" src="../static/js/main.js"></script>
 </head>
 <body>
     <div class="header">
@@ -18,7 +19,7 @@
 
     <div class="choosing-board">
         <p class="choosing-board-title">Choose Mode</p>
-        <a href="mapping"><button class="mapping-btn">MAPPING</button></a>
+        <button class="mapping-btn" onclick="redirect_to_mapping()">MAPPING</button>
         <div class="navigation-dropdown">
             <button class="navigation-btn">NAVIGATION</button>
             <div class="navigation-dropdown-content">
