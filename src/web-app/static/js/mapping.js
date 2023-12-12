@@ -4,6 +4,33 @@ var homing = false;
 var MAP_WIDTH = (window.innerWidth)*0.65;
 var MAP_HEIGHT = window.innerHeight - (window.innerHeight)*0.08;
 
+$("#savemap").click(function(event) {
+    event.preventDefault();
+
+    var mapname = prompt("Please enter the name of the map");
+
+    if (mapname) {
+        $.ajax({
+            url: '/mapping/savemap',
+            type: 'POST',
+            data: mapname,
+            success: function(response) {
+                window.location ="/mapping";
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+
+        })
+
+
+    } else {
+        alert("enter valid mapname to save");
+    }
+
+});
+
 $(document).ready(function() {
     $body = $("body");
     var ros = new ROSLIB.Ros({
