@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapping</title>
     <!-- JS Library -->
-    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script> -->
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script> -->`
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/easeljs.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/eventemitter2.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/roslib.min.js')}}"></script>
@@ -43,7 +44,7 @@
                 <button type="button" class="btn btn-success savemap-btn" id="savemap">Save Map</button> 
             </a>
             <a href="">
-                <button type="button" class="btn btn-primary navigation-btn" data-toggle="modal" data-target="#exampleModal" id="navigation">Start Navigation</button>
+                <button type="button" class="btn btn-primary navigation-btn" data-toggle="modal" data-target="#exampleModal" id="navigation">Navigation</button>
             </a>
         </div>
     </div>

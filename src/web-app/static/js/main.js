@@ -7,32 +7,6 @@ $(document).ready(function() {
 
     $body = $("body");
 
-    $(".close-navigation").click(function(event) {
-        event.stopPropagation();
-        // console.log(event.target.previousSibling.data)
-        $.ajax({
-            url: '/deletemap',
-            type: 'POST',
-            data: event.target.previousSibling.data,
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        })
-
-    });
-
-    var close = document.getElementsByClassName("close-navigation");
-    var i;
-    for (i = 0; i < close.length; i++) {
-        close[i].onclick = function() {
-            var div = this.parentElement;
-            div.style.display = "none";
-        }
-    }
-
     $("#index-list").click(function(event) {
         
         document.cookie = event.target.innerHTML;
@@ -45,8 +19,6 @@ $(document).ready(function() {
             success: function(response) {
 
                 if (response.mapcount > 0) {
-
-                    // $body.addClass("loading");
 
                     $.ajax({
 
@@ -80,7 +52,6 @@ $(document).ready(function() {
                                     });
 
                                 });
-
 
                                 ros.on('close', function() {
                                     console.log('Connection to websocket server closed.');

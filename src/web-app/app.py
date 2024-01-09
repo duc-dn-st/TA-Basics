@@ -187,6 +187,20 @@ def stop():
 	os.system("rostopic pub /move_base/cancel actionlib_msgs/GoalID -- {}") 
 	return("stopped the robot")
 
+@app.route("/test")
+def test_navigation():
+
+    with get_db():
+        try:
+            c = get_db().cursor()
+            c.execute("SELECT * FROM maps")
+            data = c.fetchall()
+            c.close()
+        except Error as e:
+            print(e)
+
+    test = render_template('test_navigation.html', title='Test_Navigation',map = data)
+    return test
 if __name__ == "__main__":
 
     app.run(debug=False)

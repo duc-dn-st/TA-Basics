@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/test_navigation.css')}}">
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/easeljs.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/eventemitter2.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/roslib.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ros2d.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/nav2d.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/test_navigation.js')}}"></script>
+</head>
+<body>
+    <div class="header">
+        <a href="#default"><img class="logo" src="../static/picture/tut.png"></img></a>
+        <div class="header-right">
+            <p class="app-name">Robot App Control</p>
+        </div>
+    </div>
+
+    <div id="zone_joystick" style="position: relative;"></div>
+</body>
+</html>
