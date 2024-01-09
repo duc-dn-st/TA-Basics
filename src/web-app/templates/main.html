@@ -5,9 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robot Control Application</title>
+    
+    
+    <!-- Bootstrap requiry -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/easeljs.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/eventemitter2.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/roslib.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ros2d.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/nav2d.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js')}}"></script>
 
+    <!-- CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
-    <script type="text/javascript" src="../static/js/main.js"></script>
 </head>
 <body>
     <div class="header">
@@ -20,16 +36,30 @@
     <div class="choosing-board">
         <p class="choosing-board-title">Choose Mode</p>
         <button class="mapping-btn" onclick="redirect_to_mapping()">MAPPING</button>
-        <div class="navigation-dropdown">
-            <button class="navigation-btn">NAVIGATION</button>
-            <div class="navigation-dropdown-content">
-                <a href="#">LINK 1</a>
-                <a href="#">LINK 2</a>
-                <a href="#">LINK 3</a>
+        <button type="button" class="navigation-btn" data-toggle="modal" data-target="#exampleModal" id="navigation">NAVIGATION</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose map</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group" id ="index-list">
+                        {% for maps in map %}
+                            <a class="list-group-item list-group-item-action" style="cursor:pointer;">{{maps[1]}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <a href=vmd_timestamp ></a>
+    <div class="modal-load">
 </body>
 </html>

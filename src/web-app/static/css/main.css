@@ -68,36 +68,52 @@ img.logo {
     border: none;
     border-radius: 10px;
 }
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.navigation-btn:hover {background-color: red;}
 
 /* The container <div> - needed to position the dropdown content */
-.navigation-dropdown {
+/* .navigation-dropdown {
     position: relative;
     display: inline-block;
-}
+} */
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.navigation-dropdown:hover .navigation-btn {background-color: red;}
+/* .navigation-dropdown:hover .navigation-btn {background-color: red;} */
 
 /* Dropdown Content (Hidden by Default) */
-.navigation-dropdown-content {
+/* .navigation-dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-}
+} */
 
 /* Links inside the dropdown */
-.navigation-dropdown-content a {
+/* .navigation-dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-  }
+  } */
 
 /* Show the dropdown menu on hover */
-.navigation-dropdown:hover .navigation-dropdown-content {display: block;}
+/* .navigation-dropdown:hover .navigation-dropdown-content {display: block;} */
 
 /* Change color of dropdown links on hover */
-.navigation-dropdown-content a:hover {background-color: #ddd;}
+/* .navigation-dropdown-content a:hover {background-color: #ddd;} */
+
+.close-navigation {
+  position: absolute;
+  right: 0;
+  padding: 0px 6px 0px 6px;
+  cursor: pointer;
+  
+}
+
+.close-navigation:hover {
+  background-color: #f44336;
+  color: white;
+
+}
