@@ -1,10 +1,10 @@
 from flask import Flask, render_template, url_for, g, jsonify, request
+from sqlite3 import Error
 import subprocess
 import signal
-from sqlite3 import Error
-import sqlite3
 import os
 import time
+import sqlite3
 
 app = Flask(__name__)
 
@@ -24,7 +24,6 @@ def close_connection(exception):
 
 @app.before_request
 def create_table():
-       
     with app.app_context():
         try:
             c = get_db().cursor()
@@ -43,23 +42,45 @@ class roslaunch_process():
 
         self.process_mapping.send_signal(signal.SIGINT)    
 
+    @classmethod
+    def start_navigation(self, mapname):
+
+        self.process_navigation = subprocess.Popen(["roslaunch","--wait", "turtlebot3_navigation", "turtlebot3_navigation.launch","map_file:="+os.getcwd()+"/static/"+mapname+".yaml"])
+
+    @classmethod
+    def stop_navigation(self):
+        self.process_navigation.send_signal(signal.SIGINT)	
+
 @app.route('/')
 def main():
-    html = render_template('main.html')
+
+    with get_db():
+        try:
+            c = get_db().cursor()
+            c.execute("SELECT * FROM maps")
+            data = c.fetchall()
+            c.close()
+        except Error as e:
+            print(e)
+
+    html = render_template('main.html',title='Index',map = data)
     return html
 
 @app.route('/mapping')
 def mapping():
     roslaunch_process.start_mapping()
 
-    mapping = render_template('mapping.html', title='Mapping')
+    with get_db():
+        try:
+            c = get_db().cursor()
+            c.execute("SELECT * FROM maps")
+            data = c.fetchall()
+            c.close()
+        except Error as e:
+            print(e)
+
+    mapping = render_template('mapping.html', title='Mapping', map = data)
     return mapping
-
-
-@app.route("/mapping/cutmapping" , methods=['POST'])
-def killnode():
-	roslaunch_process.stop_mapping() 
-	return("killed the mapping node")
 
 @app.route("/mapping/savemap" , methods=['POST'])
 def savemap():
@@ -72,12 +93,100 @@ def savemap():
         try:
             c = get_db().cursor()
             c.execute("insert into maps (name) values (?)", (mapname,))
-            # get_db().commit()
             c.close()
         except Error as e:
             print(e)
 
     return("success")
 
+@app.route("/mapping/cutmapping" , methods=['POST'])
+def killnode():
+	roslaunch_process.stop_mapping() 
+	return("killed the mapping node")
+
+@app.route('/deletemap',methods=['POST'])
+def deletemap():
+    mapname = request.get_data().decode('utf-8')
+    print(mapname)
+    os.system("rm -rf"+" "+os.getcwd()+"/static/"+mapname+".yaml "+os.getcwd()+"/static/"+mapname+".png "+os.getcwd()+"/static/"+mapname+".pgm")
+
+    with get_db():
+        try:
+            c = get_db().cursor()
+            c.execute("DELETE FROM maps WHERE name=?", (mapname,))
+            c.close()
+        except Error as e:
+            print(e)
+    return ("successfully deleted map")	
+
+
+@app.route('/main/<variable>',methods=['GET','POST'])
+def themainroute(variable):
+    if variable == "navigation-precheck" :
+
+        with get_db():
+
+            try:
+                c = get_db().cursor()
+                c.execute("SELECT count(*) FROM maps")
+                k=c.fetchall()[0][0]
+                c.close()
+                print(k)
+
+                return jsonify(mapcount=k) 
+
+            except Error as e:
+                print(e)
+                
+    elif variable == "gotonavigation":
+
+        mapname =request.get_data().decode('utf-8')
+
+        roslaunch_process.start_navigation(mapname)
+
+    return "success"
+
+@app.route('/navigation')
+def navigation():
+
+    with get_db():
+        try:
+            c = get_db().cursor()
+            c.execute("SELECT * FROM maps")
+            data = c.fetchall()
+            c.close()
+        except Error as e:
+            print(e)
+
+    navigation = render_template('navigation.html', title='Navigation',map = data)
+    return navigation
+
+@app.route("/navigation/<variable>" , methods=['GET','POST'])
+def gotomapping(variable):
+	if variable == "index":
+		roslaunch_process.start_mapping()
+	elif variable == "gotomapping":		
+		roslaunch_process.stop_navigation()
+		time.sleep(2)
+		roslaunch_process.start_mapping()
+          
+	return "success"
+
+@app.route("/navigation/loadmap" , methods=['POST'])
+def navigation_properties():
+
+	mapname = request.get_data().decode('utf-8')
+	
+	roslaunch_process.stop_navigation()
+	time.sleep(5)
+	roslaunch_process.start_navigation(mapname)
+	return("success")
+
+@app.route("/navigation/stop" , methods=['POST'])
+def stop():
+	os.system("rostopic pub /move_base/cancel actionlib_msgs/GoalID -- {}") 
+	return("stopped the robot")
+
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    app.run(debug=False)
