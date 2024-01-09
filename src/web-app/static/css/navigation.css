@@ -1,0 +1,126 @@
+/* Header */
+.header {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    padding: 20px 10px;
+    height: 100px;
+}
+
+.header a {
+    float: left;
+}
+
+.header p {
+    color: black;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+img.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: scale-down;
+}
+
+.control-board {
+    position: absolute;
+    height: 120px;
+    width: 100%;
+    bottom: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.control-board-right {
+    float: right;
+}
+
+.gotomapping-btn {
+    margin-right : 50px
+}
+
+/* Control bar */
+.controls {
+    position: absolute;
+    left: 20px;
+    bottom: 10px;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 10;
+    /*height: auto;*/
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.controls li {
+    margin: 10px 0;
+}
+
+.caption {
+    /* Make the caption a block so it occupies its own line. */
+    display: block;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+
+.controls ul li a:hover {
+  text-shadow: 0 0 5px #0003b3; 
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+.dropbtn:hover{
+  /*text-shadow: 1px 1px 0px #000000;*/
+  opacity: 1;
+}
+ .droptext 
+ {overflow:hidden;
+  display:inline-block;
+  text-overflow: ellipsis;
+}
+
+
+.show {
+  display: block;
+}
+
+/* drop down ends*/
+
+#nav {
+    padding-left: 10%;
+}
