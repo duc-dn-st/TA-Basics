@@ -2,7 +2,7 @@
     overflow: hidden;
     background-color: #f1f1f1;
     padding: 20px 10px;
-    height: 70px;
+    height: 100px;
 }
 
 .header a {
@@ -18,7 +18,7 @@
 }
 
 img.logo {
-    width: 70px;
+    width: 7\0px;
     height: 70px;
     object-fit: scale-down;
 }
@@ -48,7 +48,7 @@ img.logo {
 }
 
 .savemap-btn {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     background-color: black;
     color: white;
@@ -57,10 +57,28 @@ img.logo {
 .savemap-btn:hover {background-color: red;}
 
 .navigation-btn {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     background-color: black;
     color: white;
 }
 /* Change the background color of the button when hover*/
 .navigation-btn:hover {background-color: red;}
+
+#nav {
+    padding-left: 20%;
+}
+
+.close-navigation {
+  position: absolute;
+  right: 0;
+  padding: 0px 6px 0px 6px;
+  cursor: pointer;
+  
+}
+
+.close-navigation:hover {
+  background-color: #f44336;
+  color: white;
+
+}

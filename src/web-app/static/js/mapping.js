@@ -4,48 +4,20 @@ var homing = false;
 var MAP_WIDTH = (window.innerWidth)*0.65;
 var MAP_HEIGHT = window.innerHeight - (window.innerHeight)*0.08;
 
-$("#savemap").click(function(event) {
-    event.preventDefault();
-
-    var mapname = prompt("Please enter the name of the map");
-
-    if (mapname) {
-        $.ajax({
-            url: '/mapping/savemap',
-            type: 'POST',
-            data: mapname,
-            success: function(response) {
-                window.location ="/mapping";
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-
-        })
-
-
-    } else {
-        alert("enter valid mapname to save");
-    }
-
-});
-
 $(document).ready(function() {
     $body = $("body");
     var ros = new ROSLIB.Ros({
         url: 'ws://localhost:9090'
     });
 
-    // Create the main viewer.
+    // Create Map View
     var viewer = new ROS2D.Viewer({
         divID: 'nav',
         width: MAP_WIDTH,
         height: MAP_HEIGHT
     });
 
-
-
+    // Gridmap for map
     gridClient = new NAV2D.OccupancyGridClientNav({
         ros: ros,
         rootObject: viewer.scene,
@@ -54,54 +26,9 @@ $(document).ready(function() {
         continuous: true
     });
 
-
-    var pan = new ROS2D.PanView({
-        ros: ros,
-        rootObject: viewer.scene
-    });
-
-    window.pane = function(a, b) {
-        pan.startPan(a, b);
-    }
-
-    window.paned = function(c, d) {
-        pan.pan(c, d);
-    }
-
-    window.zoomInMap = function(ros, viewer) {
-        var zoom = new ROS2D.ZoomView({
-            ros: ros,
-            rootObject: viewer.scene
-        });
-        zoom.startZoom(250, 250);
-        zoom.zoom(1.2);
-    }
-
-    window.zoomOutMap = function(ros, viewer) {
-        var zoom = new ROS2D.ZoomView({
-            ros: ros,
-            rootObject: viewer.scene
-        });
-        zoom.startZoom(250, 250);
-        zoom.zoom(0.8);
-    }
-
-
-    $("#zoomplus").click(function(event) {
-        event.preventDefault();
-        zoomInMap(ros, viewer);
-
-    });
-
-    $("#zoomminus").click(function(event) {
-        event.preventDefault();
-        zoomOutMap(ros, viewer);
-    });
-
+    // Save map function
     $("#savemap").click(function(event) {
         event.preventDefault();
-
-
 
         var mapname = prompt("Please enter the name of the map");
 
@@ -127,12 +54,14 @@ $(document).ready(function() {
 
     });
 
+    // Subscriber to ROS Velocity Controller command
     cmd_vel_listener = new ROSLIB.Topic({
         ros: ros,
         name: "/cmd_vel",
         messageType: 'geometry_msgs/Twist'
     });
 
+    // Joystick move function
     move = function(linear, angular) {
         var twist = new ROSLIB.Message({
             linear: {
@@ -149,11 +78,12 @@ $(document).ready(function() {
         cmd_vel_listener.publish(twist);
     }
 
+    // Create joystick function
     createJoystick = function() {
         var options = {
-            zone: document.getElementById('zonejoystick'),
+            zone: document.getElementById('zone_joystick'),
             threshold: 0.1,
-            position: { left: '18%', bottom: '20%' },
+            position: { left: '10%', bottom: '20%'},
             mode: 'static',
             size: 150,
             color: 'blue',
@@ -185,18 +115,18 @@ $(document).ready(function() {
         });
     }
 
-
     window.onload = function() {
         createJoystick();
     }
 
+    // Button to hide/show menu bar for navigation button
     $('.menu-btn').click(function() {
         $(this).toggleClass("menu-btn-left");
         $('.box-out').toggleClass('box-in');
     });
 
-
-    $("#start-nav-button").click(function() {
+    // Navigation button
+    $("#navigation").click(function() {
         event.preventDefault();
     });
 
@@ -210,20 +140,19 @@ $(document).ready(function() {
             success: function(response) {
 
                 $.ajax({
-                    url: '/index/navigation-precheck',
+                    url: '/main/navigation-precheck',
                     type: 'GET',
                     success: function(response) {
                         console.log(response.mapcount);
                         if (response.mapcount > 0) {
                             $body.addClass("loading");
                             $.ajax({
-                                url: '/index/gotonavigation',
+                                url: '/main/gotonavigation',
                                 type: 'POST',
                                 data: event.target.innerHTML,
                                 success: function(response) {
 
                                     // console.log(response)
-
 
                                     var rosTopic = new ROSLIB.Topic({
                                         ros: ros,
@@ -240,18 +169,12 @@ $(document).ready(function() {
                                             $body.removeClass("loading");
                                             // window.location = "/navigation";
                                         }
-
                                     });
-
                                 },
                                 error: function(error) {
                                     console.log(error);
                                 }
-
                             })
-
-
-
                         } else {
                             alert("No map in directory.Please do mapping.")
                         }
@@ -259,19 +182,38 @@ $(document).ready(function() {
                     error: function(error) {
                         console.log(error);
                     }
-
                 })
-
             },
             error: function(error) {
                 console.log(error);
             }
+        })
+    });
 
+    $(".close-navigation").click(function(event) {
+        event.stopPropagation();
+        // console.log(event.target.previousSibling.data)
+        $.ajax({
+            url: '/deletemap',
+            type: 'POST',
+            data: event.target.previousSibling.data,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
         })
 
     });
 
-
-
+    var close = document.getElementsByClassName("close-navigation");
+    var i;
+    for (i = 0; i < close.length; i++) {
+        close[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.display = "none";
+        }
+    }
 
 });
